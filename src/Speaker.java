@@ -4,7 +4,7 @@
 
 
 public class Speaker extends Person {
-    private String title, organization, address, email, city, speechDate, invitee, spring, summer1, summer2, fall;
+    private String title, organization, address, email, city, speechDate, invitee, spring, summer1, summer2, fall, giftType;
 
     private Boolean inPerson, permitMailed, prevGift;
 

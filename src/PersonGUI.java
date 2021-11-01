@@ -194,7 +194,12 @@ public class PersonGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             x.setFirstName(firstNameTxt.getText());
             x.setLastName(lastName.getText());
-            //add the rest here
+            x.setAddress(addressTxt.getText());
+            x.setCity(cityTxt.getText());
+            x.setEmail(emailTxt.getText());
+            x.setSpeechDate(speechDateTxt.getText());
+            x.setInvitee(inviteeTxt.getText());
+            // add semester
             }
         }
 

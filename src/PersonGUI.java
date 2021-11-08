@@ -5,11 +5,12 @@ import java.awt.event.ActionListener;
 
 public class PersonGUI extends JFrame {
 
+    private Database myDB = new Database();
 
     private JLabel firstName, lastName, titleLbl, orgLabel, addressLabel, emailLabel, cityLabel, speechDateLabel, inviteeLabel;
 
 
-    private JButton submittBtn;
+    private JButton submitBtn;
 
     private JTextField firstNameTxt, lastnameTxt, titleTxt, orgTxt, addressTxt, emailTxt, cityTxt, speechDateTxt, inviteeTxt;
     private JTextArea displaySpeaker;
@@ -34,7 +35,7 @@ public class PersonGUI extends JFrame {
     public PersonGUI() {
         super("Speaker Manager");
         x = new Speaker();
-        setLayout(new GridLayout(4, 1,1, 1));
+        setLayout(new GridLayout(4, 1, 1, 1));
 
         enterPersonPanel = createEnterPersonPanel();
         seasonRadioButtonPanel = seasonCreateRadioButtonPanel();
@@ -50,7 +51,7 @@ public class PersonGUI extends JFrame {
         add(displayPanel);
         add(buttonPanel);
 
-        setSize(512,512);
+        setSize(512, 512);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -129,7 +130,7 @@ public class PersonGUI extends JFrame {
         giftRadioButtonPanel.setBorder(BorderFactory.createTitledBorder("Previous Gift? "));
         giftRadioButtonPanel.setLayout(new BoxLayout(giftRadioButtonPanel, BoxLayout.Y_AXIS));
 
-        for(int i = 0; i < giftOption.length; i++) {
+        for (int i = 0; i < giftOption.length; i++) {
             giftOption[i] = new JRadioButton(giftOptionLabels[i]);
             giftRadioButtonPanel.add(giftOption[i]);
             giftOptionGroup.add(giftOption[i]);
@@ -147,7 +148,7 @@ public class PersonGUI extends JFrame {
         inPersonRadioButtonPanel.setBorder(BorderFactory.createTitledBorder("In Person or Zoom? "));
         inPersonRadioButtonPanel.setLayout(new BoxLayout(inPersonRadioButtonPanel, BoxLayout.Y_AXIS));
 
-        for(int i = 0; i < inPersonOption.length; i++) {
+        for (int i = 0; i < inPersonOption.length; i++) {
             inPersonOption[i] = new JRadioButton(inPersonLabels[i]);
             inPersonRadioButtonPanel.add(inPersonOption[i]);
             inPersonGroup.add(inPersonOption[i]);
@@ -181,9 +182,9 @@ public class PersonGUI extends JFrame {
         ButtonHandle handler = new ButtonHandle();
 
         buttonPanel = new JPanel();
-        submittBtn = new JButton("Submit");
-        submittBtn.addActionListener(handler);
-        buttonPanel.add(submittBtn);
+        submitBtn = new JButton("Submit");
+        submitBtn.addActionListener(handler);
+        buttonPanel.add(submitBtn);
 
         return buttonPanel;
     }
@@ -192,16 +193,24 @@ public class PersonGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            x.setFirstName(firstNameTxt.getText());
-            x.setLastName(lastName.getText());
-            x.setAddress(addressTxt.getText());
-            x.setCity(cityTxt.getText());
-            x.setEmail(emailTxt.getText());
-            x.setSpeechDate(speechDateTxt.getText());
-            x.setInvitee(inviteeTxt.getText());
-            // add semester
+
+            myDB = new Database();
+            String fName, lName, addr, city, email, speechDate, invitee;
+            int result = 0;
+
+            if (e.getSource() == submitBtn) {
+                fName = firstNameTxt.getText();
+                lName = lastnameTxt.getText();
+                addr = addressTxt.getText();
+                city = cityTxt.getText();
+                email = emailTxt.getText();
+                speechDate = speechDateTxt.getText();
+                invitee = inviteeTxt.getText();
+
+                result = myDB.addSpeaker(fName, lName, addr, city, email, speechDate, invitee);
             }
         }
+    }
 
 
     public static void main(String[] args) {

@@ -7,7 +7,7 @@ public class PersonGUI extends JFrame {
 
     private Database myDB = new Database();
 
-    private JLabel firstName, lastName, titleLbl, orgLabel, addressLabel, emailLabel, cityLabel, speechDateLabel, inviteeLabel;
+    private JLabel firstName, lastName, titleLbl, orgLabel, addressLabel, emailLabel, cityLabel, speechDateLabel, inviteeLabel, giftTypeLabel;
 
 
     private JButton submitBtn;
@@ -18,14 +18,22 @@ public class PersonGUI extends JFrame {
     private ButtonGroup seasonOptionGroup = new ButtonGroup();
     private JRadioButton seasonOption[] = new JRadioButton[4];
     private String seasonOptionLabels[] = {"Spring", "Summer1", "Summer2", "Fall"};
+    private JLabel semesterYear;
+    private JTextField semesterYearTxt;
+
 
     private ButtonGroup giftOptionGroup = new ButtonGroup();
     private JRadioButton giftOption[] = new JRadioButton[2];
     private String giftOptionLabels[] = {"Yes", "No"};
 
+    private ButtonGroup giftTypeOptionGroup = new ButtonGroup();
+    private JRadioButton giftType[] = new JRadioButton[3];
+    private String giftTypeLabels[] = {"Coffee Mug", "Compact Umbrella", "Portfolio Binder"};
+
     private ButtonGroup inPersonGroup = new ButtonGroup();
     private JRadioButton inPersonOption[] = new JRadioButton[2];
     private String inPersonLabels[] = {"In Person", "Zoom"};
+
 
 
     private JPanel enterPersonPanel, seasonRadioButtonPanel, giftRadioButtonPanel, inPersonRadioButtonPanel, displayPanel, buttonPanel;
@@ -41,17 +49,17 @@ public class PersonGUI extends JFrame {
         seasonRadioButtonPanel = seasonCreateRadioButtonPanel();
         giftRadioButtonPanel = giftCreateRadioButtonPanel();
         inPersonRadioButtonPanel = inPersonCreateRadioButtonPanel();
-        displayPanel = createDisplayPanel();
+        //displayPanel = createDisplayPanel();
         buttonPanel = createButtonPanel();
 
         add(enterPersonPanel);
         add(seasonRadioButtonPanel);
         add(giftRadioButtonPanel);
         add(inPersonRadioButtonPanel);
-        add(displayPanel);
+        //add(displayPanel);
         add(buttonPanel);
 
-        setSize(512, 512);
+        setSize(1024, 768);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -64,7 +72,7 @@ public class PersonGUI extends JFrame {
         addressLabel = new JLabel("Address: ", SwingConstants.RIGHT);
         emailLabel = new JLabel("Email Address: ", SwingConstants.RIGHT);
         cityLabel = new JLabel("City: ", SwingConstants.RIGHT);
-        speechDateLabel = new JLabel("Speech Date", SwingConstants.RIGHT);
+        speechDateLabel = new JLabel("Speech Date(DD/MM/YY)", SwingConstants.RIGHT);
         inviteeLabel = new JLabel("Invitee: ", SwingConstants.RIGHT);
 
         firstNameTxt = new JTextField(25);
@@ -108,6 +116,9 @@ public class PersonGUI extends JFrame {
 
         RadioButtonHandle handler = new RadioButtonHandle();
 
+        semesterYear = new JLabel("Year: ", SwingConstants.RIGHT);
+        semesterYearTxt = new JTextField(25);
+
         seasonRadioButtonPanel = new JPanel();
         seasonRadioButtonPanel.setBorder(BorderFactory.createTitledBorder("Semester: "));
         seasonRadioButtonPanel.setLayout(new BoxLayout(seasonRadioButtonPanel, BoxLayout.Y_AXIS));
@@ -119,12 +130,19 @@ public class PersonGUI extends JFrame {
 
             seasonOption[i].addActionListener(handler);
         }
+
+        seasonRadioButtonPanel.add(semesterYear);
+        seasonRadioButtonPanel.add(semesterYearTxt);
         return seasonRadioButtonPanel;
     }
 
     public JPanel giftCreateRadioButtonPanel() {
 
         RadioButtonHandle handler = new RadioButtonHandle();
+        RadioButtonHandleGiftHide handlerHide = new RadioButtonHandleGiftHide();
+
+        giftTypeLabel = new JLabel("Gift Type: ", SwingConstants.RIGHT);
+
 
         giftRadioButtonPanel = new JPanel();
         giftRadioButtonPanel.setBorder(BorderFactory.createTitledBorder("Previous Gift? "));
@@ -135,9 +153,31 @@ public class PersonGUI extends JFrame {
             giftRadioButtonPanel.add(giftOption[i]);
             giftOptionGroup.add(giftOption[i]);
 
-            giftOption[i].addActionListener(handler);
+            giftOption[i].addActionListener(handlerHide);
         }
+        giftRadioButtonPanel.add(giftTypeLabel);
+
+        for (int i = 0; i < giftType.length; i++) {
+            giftType[i] = new JRadioButton(giftTypeLabels[i]);
+            giftRadioButtonPanel.add(giftType[i]);
+            giftTypeOptionGroup.add(giftType[i]);
+
+            giftType[i].addActionListener(handler);
+        }
+        giftOption[1].setSelected(true);
+
         return giftRadioButtonPanel;
+    }
+
+    class RadioButtonHandleGiftHide implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            if(e.getSource() == giftOption[0]) {
+                giftTypeLabel.hide();
+            }
+            if (e.getSource() == giftOption[1]) {
+                giftTypeLabel.show();
+            }
+        }
     }
 
     public JPanel inPersonCreateRadioButtonPanel() {
@@ -166,16 +206,16 @@ public class PersonGUI extends JFrame {
         }
     }
 
-    public JPanel createDisplayPanel() {
-        displayPanel = new JPanel();
-        displayPanel.setBorder(BorderFactory.createTitledBorder("Display"));
-        displayPanel.setBackground(Color.LIGHT_GRAY);
-        displaySpeaker = new JTextArea(5, 25);
-        displaySpeaker.setEditable(false);
-        displayPanel.add(displaySpeaker);
-
-        return displayPanel;
-    }
+//    public JPanel createDisplayPanel() {
+//        displayPanel = new JPanel();
+//        displayPanel.setBorder(BorderFactory.createTitledBorder("Display"));
+//        displayPanel.setBackground(Color.LIGHT_GRAY);
+//        displaySpeaker = new JTextArea(5, 25);
+//        displaySpeaker.setEditable(false);
+//        displayPanel.add(displaySpeaker);
+//
+//        return displayPanel;
+//    }
 
     public JPanel createButtonPanel() {
 
@@ -183,6 +223,7 @@ public class PersonGUI extends JFrame {
 
         buttonPanel = new JPanel();
         submitBtn = new JButton("Submit");
+        submitBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         submitBtn.addActionListener(handler);
         buttonPanel.add(submitBtn);
 

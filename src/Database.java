@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class Database {
 
-    static final String DATABASE_URL = "jdbc:ucanacces://C://Users//joeyr//Documents//IST311.accdb";
+    static final String DATABASE_URL = "jdbc:ucanaccess://C://Users//joeyr//Documents//IST311.accdb";
     Connection connection = null;
     Statement statement = null;
     ResultSet resultSet = null;
@@ -12,9 +12,11 @@ public class Database {
 
     public Database() {
         try {
+
             System.out.println("Starting Database Connection");
 
             connection = DriverManager.getConnection(DATABASE_URL);
+
             System.out.println("Connected");
 
             statement = connection.createStatement();

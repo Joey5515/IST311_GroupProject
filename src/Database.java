@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class Database {
 
-    static final String DATABASE_URL = "jdbc:ucanacces://C:/Users/joeyr/Documents/IST311.accdb";
+    static final String DATABASE_URL = "jdbc:ucanacces://C://Users//joeyr//Documents//IST311.accdb";
     Connection connection = null;
     Statement statement = null;
     ResultSet resultSet = null;

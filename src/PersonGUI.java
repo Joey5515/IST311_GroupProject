@@ -7,7 +7,7 @@ public class PersonGUI extends JFrame {
 
     private Database myDB = new Database();
 
-    private JLabel firstName, lastName, titleLbl, orgLabel, addressLabel, emailLabel, cityLabel, speechDateLabel, inviteeLabel, giftTypeLabel;
+    private JLabel firstName, lastName, titleLbl, orgLabel, addressLabel, emailLabel, cityLabel, speechDateLabel, inviteeLabel, giftTypeLabel, parkingPassLabel;
 
 
     private JButton submitBtn;
@@ -34,9 +34,13 @@ public class PersonGUI extends JFrame {
     private JRadioButton inPersonOption[] = new JRadioButton[2];
     private String inPersonLabels[] = {"In Person", "Zoom"};
 
+    private ButtonGroup parkingPassGroup = new ButtonGroup();
+    private JRadioButton parkingPassOption[] = new JRadioButton[2];
+    private String parkingPassLabels[] = {"Yes", "No"};
 
 
-    private JPanel enterPersonPanel, seasonRadioButtonPanel, giftRadioButtonPanel, inPersonRadioButtonPanel, displayPanel, buttonPanel;
+
+    private JPanel enterPersonPanel, seasonRadioButtonPanel, giftRadioButtonPanel, inPersonRadioButtonPanel, displayPanel, buttonPanel, parkingPassRadioButtonPanel;
 
     private Speaker x;
 
@@ -49,6 +53,7 @@ public class PersonGUI extends JFrame {
         seasonRadioButtonPanel = seasonCreateRadioButtonPanel();
         giftRadioButtonPanel = giftCreateRadioButtonPanel();
         inPersonRadioButtonPanel = inPersonCreateRadioButtonPanel();
+        //parkingPassRadioButtonPanel = inPersonCreateRadioButtonPanel();
         //displayPanel = createDisplayPanel();
         buttonPanel = createButtonPanel();
 
@@ -58,6 +63,7 @@ public class PersonGUI extends JFrame {
         add(inPersonRadioButtonPanel);
         //add(displayPanel);
         add(buttonPanel);
+        //add(parkingPassRadioButtonPanel);
 
         setSize(1024, 768);
         setVisible(true);
@@ -188,6 +194,8 @@ public class PersonGUI extends JFrame {
         inPersonRadioButtonPanel.setBorder(BorderFactory.createTitledBorder("In Person or Zoom? "));
         inPersonRadioButtonPanel.setLayout(new BoxLayout(inPersonRadioButtonPanel, BoxLayout.Y_AXIS));
 
+        parkingPassLabel = new JLabel("Parking Pass Issued: ", SwingConstants.RIGHT);
+
         for (int i = 0; i < inPersonOption.length; i++) {
             inPersonOption[i] = new JRadioButton(inPersonLabels[i]);
             inPersonRadioButtonPanel.add(inPersonOption[i]);
@@ -195,6 +203,18 @@ public class PersonGUI extends JFrame {
 
             inPersonOption[i].addActionListener(handler);
         }
+
+
+        inPersonRadioButtonPanel.add(parkingPassLabel);
+
+        for (int i = 0; i < parkingPassOption.length; i++) {
+            parkingPassOption[i] = new JRadioButton(parkingPassLabels[i]);
+            inPersonRadioButtonPanel.add(parkingPassOption[i]);
+            parkingPassGroup.add(parkingPassOption[i]);
+
+            parkingPassOption[i].addActionListener(handler);
+        }
+
         return inPersonRadioButtonPanel;
     }
 

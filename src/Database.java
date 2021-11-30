@@ -28,18 +28,19 @@ public class Database {
         }
     }
 
-    public int addSpeaker(String fName, String lName, String add, String cityAddress, String emailAddress, String speechDate, String invited) {
+    public int addSpeaker(String fName, String lName, String title, String inPersonAddress, String emailAddress, String city, String speechDate, String invitedBy) {
         int result = 0;
 
         try {
-            insertNewSpeaker = connection.prepareStatement("INSERT INTO PERSON (firstName, lastName, Title, Address, Email, City, SpeechDate, Invitee) values (?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            insertNewSpeaker = connection.prepareStatement("INSERT INTO SPEAKERS (firstName, lastName, Title, Address, Email, City, SpeechDate, Invitee) values (?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             insertNewSpeaker.setString(1, fName);
             insertNewSpeaker.setString(2, lName);
-            insertNewSpeaker.setString(3, add);
-            insertNewSpeaker.setString(4, cityAddress);
+            insertNewSpeaker.setString(3, title);
+            insertNewSpeaker.setString(4, inPersonAddress);
             insertNewSpeaker.setString(5, emailAddress);
-            insertNewSpeaker.setString(6, speechDate);
-            insertNewSpeaker.setString(7, invited);
+            insertNewSpeaker.setString(6, city);
+            insertNewSpeaker.setString(7, speechDate);
+            insertNewSpeaker.setString(8, invitedBy);
 
             result = insertNewSpeaker.executeUpdate();
 

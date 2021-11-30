@@ -256,19 +256,20 @@ public class PersonGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
 
             myDB = new Database();
-            String fName, lName, addr, city, email, speechDate, invitee;
+            String fName, lName, title, addr, city, email, speechDate, invitee;
             int result = 0;
 
             if (e.getSource() == submitBtn) {
                 fName = firstNameTxt.getText();
                 lName = lastnameTxt.getText();
+                title = titleTxt.getText();
                 addr = addressTxt.getText();
                 city = cityTxt.getText();
                 email = emailTxt.getText();
                 speechDate = speechDateTxt.getText();
                 invitee = inviteeTxt.getText();
 
-                result = myDB.addSpeaker(fName, lName, addr, city, email, speechDate, invitee);
+                result = myDB.addSpeaker(fName, lName, title, addr, city, email, speechDate, invitee);
             }
         }
     }

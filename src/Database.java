@@ -28,11 +28,11 @@ public class Database {
         }
     }
 
-    public int addSpeaker(String fName, String lName, String title, String inPersonAddress, String emailAddress, String city, String speechDate, String invitedBy) {
+    public int addSpeaker(String fName, String lName, String title, String inPersonAddress, String emailAddress, String city, String speechDate, String invitedBy, String org, String sem, String gft, String parkPass, String inPer) {
         int result = 0;
 
         try {
-            insertNewSpeaker = connection.prepareStatement("INSERT INTO SPEAKERS (firstName, lastName, Title, Address, Email, City, SpeechDate, Invitee) values (?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            insertNewSpeaker = connection.prepareStatement("INSERT INTO SPEAKERS (firstName, lastName, Title, Address, Email, City, SpeechDate, Invitee, Organization, Semester, Gift, ParkingPass, inPerson) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             insertNewSpeaker.setString(1, fName);
             insertNewSpeaker.setString(2, lName);
             insertNewSpeaker.setString(3, title);
@@ -41,6 +41,11 @@ public class Database {
             insertNewSpeaker.setString(6, city);
             insertNewSpeaker.setString(7, speechDate);
             insertNewSpeaker.setString(8, invitedBy);
+            insertNewSpeaker.setString(9, org);
+            insertNewSpeaker.setString(10, sem);
+            insertNewSpeaker.setString(11, gft);
+            insertNewSpeaker.setString(12, parkPass);
+            insertNewSpeaker.setString(13, inPer);
 
             result = insertNewSpeaker.executeUpdate();
 

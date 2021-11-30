@@ -9,6 +9,7 @@ public class PersonGUI extends JFrame {
 
     private JLabel firstName, lastName, titleLbl, orgLabel, addressLabel, emailLabel, cityLabel, speechDateLabel, inviteeLabel, giftTypeLabel, parkingPassLabel;
 
+    String radioOptions[] = new String[5];
 
     private JButton submitBtn;
 
@@ -17,18 +18,14 @@ public class PersonGUI extends JFrame {
 
     private ButtonGroup seasonOptionGroup = new ButtonGroup();
     private JRadioButton seasonOption[] = new JRadioButton[4];
-    private String seasonOptionLabels[] = {"Spring", "Summer1", "Summer2", "Fall"};
+    private String semesterOptionLabels[] = {"Spring", "Summer1", "Summer2", "Fall"};
     private JLabel semesterYear;
     private JTextField semesterYearTxt;
 
 
-    private ButtonGroup giftOptionGroup = new ButtonGroup();
-    private JRadioButton giftOption[] = new JRadioButton[2];
-    private String giftOptionLabels[] = {"Yes", "No"};
-
     private ButtonGroup giftTypeOptionGroup = new ButtonGroup();
-    private JRadioButton giftType[] = new JRadioButton[3];
-    private String giftTypeLabels[] = {"Coffee Mug", "Compact Umbrella", "Portfolio Binder"};
+    private JRadioButton giftType[] = new JRadioButton[4];
+    private String giftTypeLabels[] = {"None", "Coffee Mug", "Compact Umbrella", "Portfolio Binder"};
 
     private ButtonGroup inPersonGroup = new ButtonGroup();
     private JRadioButton inPersonOption[] = new JRadioButton[2];
@@ -37,7 +34,6 @@ public class PersonGUI extends JFrame {
     private ButtonGroup parkingPassGroup = new ButtonGroup();
     private JRadioButton parkingPassOption[] = new JRadioButton[2];
     private String parkingPassLabels[] = {"Yes", "No"};
-
 
 
     private JPanel enterPersonPanel, seasonRadioButtonPanel, giftRadioButtonPanel, inPersonRadioButtonPanel, displayPanel, buttonPanel, parkingPassRadioButtonPanel;
@@ -53,17 +49,13 @@ public class PersonGUI extends JFrame {
         seasonRadioButtonPanel = seasonCreateRadioButtonPanel();
         giftRadioButtonPanel = giftCreateRadioButtonPanel();
         inPersonRadioButtonPanel = inPersonCreateRadioButtonPanel();
-        //parkingPassRadioButtonPanel = inPersonCreateRadioButtonPanel();
-        //displayPanel = createDisplayPanel();
         buttonPanel = createButtonPanel();
 
         add(enterPersonPanel);
         add(seasonRadioButtonPanel);
         add(giftRadioButtonPanel);
         add(inPersonRadioButtonPanel);
-        //add(displayPanel);
         add(buttonPanel);
-        //add(parkingPassRadioButtonPanel);
 
         setSize(1024, 768);
         setVisible(true);
@@ -120,7 +112,7 @@ public class PersonGUI extends JFrame {
 
     public JPanel seasonCreateRadioButtonPanel() {
 
-        RadioButtonHandle handler = new RadioButtonHandle();
+        SeasonRadioButtonHandle handler = new SeasonRadioButtonHandle();
 
         semesterYear = new JLabel("Year: ", SwingConstants.RIGHT);
         semesterYearTxt = new JTextField(25);
@@ -130,7 +122,7 @@ public class PersonGUI extends JFrame {
         seasonRadioButtonPanel.setLayout(new BoxLayout(seasonRadioButtonPanel, BoxLayout.Y_AXIS));
 
         for (int i = 0; i < seasonOption.length; i++) {
-            seasonOption[i] = new JRadioButton(seasonOptionLabels[i]);
+            seasonOption[i] = new JRadioButton(semesterOptionLabels[i]);
             seasonRadioButtonPanel.add(seasonOption[i]);
             seasonOptionGroup.add(seasonOption[i]);
 
@@ -144,8 +136,7 @@ public class PersonGUI extends JFrame {
 
     public JPanel giftCreateRadioButtonPanel() {
 
-        RadioButtonHandle handler = new RadioButtonHandle();
-        RadioButtonHandleGiftHide handlerHide = new RadioButtonHandleGiftHide();
+        GiftRadioButtonHandle giftHandler = new GiftRadioButtonHandle();
 
         giftTypeLabel = new JLabel("Gift Type: ", SwingConstants.RIGHT);
 
@@ -154,41 +145,20 @@ public class PersonGUI extends JFrame {
         giftRadioButtonPanel.setBorder(BorderFactory.createTitledBorder("Previous Gift? "));
         giftRadioButtonPanel.setLayout(new BoxLayout(giftRadioButtonPanel, BoxLayout.Y_AXIS));
 
-        for (int i = 0; i < giftOption.length; i++) {
-            giftOption[i] = new JRadioButton(giftOptionLabels[i]);
-            giftRadioButtonPanel.add(giftOption[i]);
-            giftOptionGroup.add(giftOption[i]);
-
-            giftOption[i].addActionListener(handlerHide);
-        }
-        giftRadioButtonPanel.add(giftTypeLabel);
-
         for (int i = 0; i < giftType.length; i++) {
             giftType[i] = new JRadioButton(giftTypeLabels[i]);
             giftRadioButtonPanel.add(giftType[i]);
             giftTypeOptionGroup.add(giftType[i]);
 
-            giftType[i].addActionListener(handler);
+            giftType[i].addActionListener(giftHandler);
         }
-        giftOption[1].setSelected(true);
-
         return giftRadioButtonPanel;
-    }
-
-    class RadioButtonHandleGiftHide implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            if(e.getSource() == giftOption[0]) {
-                giftTypeLabel.hide();
-            }
-            if (e.getSource() == giftOption[1]) {
-                giftTypeLabel.show();
-            }
-        }
     }
 
     public JPanel inPersonCreateRadioButtonPanel() {
 
-        RadioButtonHandle handler = new RadioButtonHandle();
+        InPersonRadioButtonHandle inPersonHandler = new InPersonRadioButtonHandle();
+        ParkingRadioButtonHandle parkingHandler = new ParkingRadioButtonHandle();
 
         inPersonRadioButtonPanel = new JPanel();
         inPersonRadioButtonPanel.setBorder(BorderFactory.createTitledBorder("In Person or Zoom? "));
@@ -201,9 +171,8 @@ public class PersonGUI extends JFrame {
             inPersonRadioButtonPanel.add(inPersonOption[i]);
             inPersonGroup.add(inPersonOption[i]);
 
-            inPersonOption[i].addActionListener(handler);
+            inPersonOption[i].addActionListener(inPersonHandler);
         }
-
 
         inPersonRadioButtonPanel.add(parkingPassLabel);
 
@@ -212,30 +181,47 @@ public class PersonGUI extends JFrame {
             inPersonRadioButtonPanel.add(parkingPassOption[i]);
             parkingPassGroup.add(parkingPassOption[i]);
 
-            parkingPassOption[i].addActionListener(handler);
+            parkingPassOption[i].addActionListener(parkingHandler);
         }
 
         return inPersonRadioButtonPanel;
     }
 
-    class RadioButtonHandle implements ActionListener {
+    class SeasonRadioButtonHandle implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            JRadioButton jrb = (JRadioButton) e.getSource();
+            radioOptions[0] = jrb.getText();
         }
     }
 
-//    public JPanel createDisplayPanel() {
-//        displayPanel = new JPanel();
-//        displayPanel.setBorder(BorderFactory.createTitledBorder("Display"));
-//        displayPanel.setBackground(Color.LIGHT_GRAY);
-//        displaySpeaker = new JTextArea(5, 25);
-//        displaySpeaker.setEditable(false);
-//        displayPanel.add(displaySpeaker);
-//
-//        return displayPanel;
-//    }
+    class GiftRadioButtonHandle implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JRadioButton jrb = (JRadioButton) e.getSource();
+            radioOptions[1] = jrb.getText();
+        }
+    }
+
+    class ParkingRadioButtonHandle implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JRadioButton jrb = (JRadioButton) e.getSource();
+            radioOptions[2] = jrb.getText();
+        }
+    }
+
+    class InPersonRadioButtonHandle implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JRadioButton jrb = (JRadioButton) e.getSource();
+            radioOptions[3] = jrb.getText();
+        }
+    }
 
     public JPanel createButtonPanel() {
 
@@ -256,7 +242,8 @@ public class PersonGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
 
             myDB = new Database();
-            String fName, lName, title, addr, city, email, speechDate, invitee;
+            String fName, lName, title, addr, city, email, speechDate, invitee, organization;
+            String semester, gift, parkingPass, inPerson;
             int result = 0;
 
             if (e.getSource() == submitBtn) {
@@ -268,8 +255,13 @@ public class PersonGUI extends JFrame {
                 email = emailTxt.getText();
                 speechDate = speechDateTxt.getText();
                 invitee = inviteeTxt.getText();
+                organization = orgTxt.getText();
+                semester = radioOptions[0];
+                gift = radioOptions[1];
+                parkingPass = radioOptions[2];
+                inPerson = radioOptions[3];
 
-                result = myDB.addSpeaker(fName, lName, title, addr, city, email, speechDate, invitee);
+                result = myDB.addSpeaker(fName, lName, title, addr, city, email, speechDate, invitee, organization, semester, gift, parkingPass, inPerson);
             }
         }
     }

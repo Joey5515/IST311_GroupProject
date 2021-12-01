@@ -4,7 +4,7 @@
 
 
 public class Speaker extends Person {
-    private String title, organization, address, email, city, speechDate, invitee, spring, summer1, summer2, fall, giftType;
+    private String title, organization, address, email, city, speechDate, invitee, giftType;
 
     private Boolean inPerson, permitMailed, prevGift;
 
@@ -15,7 +15,7 @@ public class Speaker extends Person {
         super();
         title = "";
         organization = "";
-        //do this for all the strings and booleans
+
     }
 
     /**
@@ -33,14 +33,12 @@ public class Speaker extends Person {
      * @return toString for Speaker
      */
     public String toString() {
-        //create toString
         return  title + " " + super.toString() + ", " + organization;
     }
 
-    //**********getters***********
     /**
      *  getter
-     * @return
+     * @return title
      */
     public String getTitle() {
         return title;
@@ -48,65 +46,85 @@ public class Speaker extends Person {
 
     /**
      * getter
-     * @return
+     * @return organization
      */
     public String getOrganization() {
         return organization;
     }
 
+    /**
+     * getter
+     * @return address
+     */
     public String getAddress() {
         return address;
     }
 
+    /**
+     * getter
+     * @return email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * getter
+     * @return city
+     */
     public String getCity() {
         return city;
     }
 
+    /**
+     * getter
+     * @return speechDate
+     */
     public String getSpeechDate() {
         return speechDate;
     }
 
+    /**
+     * getter
+     * @return invitee
+     */
     public String getInvitee() {
         return invitee;
     }
 
-    public String getSpring() {
-        return spring;
-    }
-
-    public String getSummer1() {
-        return summer1;
-    }
-
-    public String getSummer2() {
-        return summer2;
-    }
-
-    public String getFall() {
-        return fall;
-    }
-
+    /**
+     * getter
+     * @return giftType
+     */
     public String getGiftType() {
         return giftType;
     }
 
+    /**
+     * getter
+     * @return inPerson
+     */
     public Boolean getInPerson() {
         return inPerson;
     }
 
+
+    /**
+     * getter
+     * @return permitMailed
+     */
     public Boolean getPermitMailed() {
         return permitMailed;
     }
 
+    /**
+     * getter
+     * @return prevGift
+     */
     public Boolean getPrevGift() {
         return prevGift;
     }
 
-    //**********setters***********
 
     /**
      * setter
@@ -121,55 +139,74 @@ public class Speaker extends Person {
      */
     public void setOrganization(String org) { org = organization; }
 
-
+    /**
+     * setter
+     * @param address
+     */
     public void setAddress(String address) {
         this.address = address;
     }
 
+    /**
+     * setter
+     * @param email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * setter
+     * @param city
+     */
     public void setCity(String city) {
         this.city = city;
     }
 
+    /**
+     * setter
+     * @param speechDate
+     */
     public void setSpeechDate(String speechDate) {
         this.speechDate = speechDate;
     }
 
+    /**
+     * setter
+     * @param invitee
+     */
     public void setInvitee(String invitee) {
         this.invitee = invitee;
     }
 
-    public void setSpring(String spring) {
-        this.spring = spring;
-    }
-
-    public void setSummer1(String summer1) {
-        this.summer1 = summer1;
-    }
-
-    public void setSummer2(String summer2) {
-        this.summer2 = summer2;
-    }
-
-    public void setFall(String fall) {
-        this.fall = fall;
-    }
-
+    /**
+     * setter
+     * @param giftType
+     */
     public void setGiftType(String giftType) {
         this.giftType = giftType;
     }
 
+    /**
+     * setter
+     * @param inPerson
+     */
     public void setInPerson(Boolean inPerson) {
         this.inPerson = inPerson;
     }
 
+    /**
+     * setter
+     * @param permitMailed
+     */
     public void setPermitMailed(Boolean permitMailed) {
         this.permitMailed = permitMailed;
     }
 
+    /**
+     * setter
+     * @param prevGift
+     */
     public void setPrevGift(Boolean prevGift) {
         this.prevGift = prevGift;
     }

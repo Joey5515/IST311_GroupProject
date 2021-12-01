@@ -4,12 +4,14 @@ import java.sql.*;
 
 public class Database {
 
+    //Establishes database location and creates corresponding variables
     static final String DATABASE_URL = "jdbc:ucanaccess://C://Users//joeyr//Documents//IST311.accdb";
     Connection connection = null;
     Statement statement = null;
     ResultSet resultSet = null;
     PreparedStatement insertNewSpeaker = null;
 
+    //Connects to the database and prints out success/fail messages
     public Database() {
         try {
 
@@ -28,6 +30,7 @@ public class Database {
         }
     }
 
+    //Adds the speaker to the database
     public int addSpeaker(String fName, String lName, String title, String inPersonAddress, String emailAddress, String city, String speechDate, String invitedBy, String org, String sem, String gft, String parkPass, String inPer) {
         int result = 0;
 
